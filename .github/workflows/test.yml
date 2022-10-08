@@ -1,7 +1,12 @@
-sudo: required
-services:
-  -docker
+name: Test Frontend
+on:
+  push:
+    branches:
+      - master
 
-before install:
-  - docker build -t prashant/docker-react -f Dockerfile.dev
-  - docker run -e CI=true prashant/docker-react npm run test
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: docker build -t prashant/docker-react -f Dockerfile.dev .
+      - run: docker run -e CI=true cygnetops/react-test npm test
